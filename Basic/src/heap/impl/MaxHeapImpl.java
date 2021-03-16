@@ -1,4 +1,4 @@
-package impl;
+package heap.impl;
 
 import heap.IMaxHeap;
 
@@ -13,12 +13,23 @@ public class MaxHeapImpl<E extends Comparable<E>> implements IMaxHeap<E> {
         this.capacity = data.length;
         this.size = data.length;
         this.data = data;
+        heapify(data);
     }
 
     public MaxHeapImpl() {
         this.capacity = 16;
         this.size = 0;
         this.data = (E[]) new Comparable[capacity];
+    }
+
+    /**
+     * time: O(n)
+     * @param data
+     */
+    private void heapify(E[] data) {
+        for (int i = getParentIndex(size - 1); i >= 0; i--) {
+            siftDownHeapify(i); //需要改写一下
+        }
     }
 
     @Override
@@ -65,7 +76,9 @@ public class MaxHeapImpl<E extends Comparable<E>> implements IMaxHeap<E> {
 
     @Override
     public void print() {
-
+        for (int i = 0; i < data.length; i++) {
+            System.out.print(data[i] + " ");
+        }
     }
 
     private void expandCapacity() {
@@ -117,6 +130,21 @@ public class MaxHeapImpl<E extends Comparable<E>> implements IMaxHeap<E> {
 
     private void siftDown() { //假设最后一个元素已经放在头部了
         int index = 0;
+        while (getLeftChildIndex(index) < size) {
+            int biggerChildIndex = getLeftChildIndex(index);
+            if (getRightChildIndex(index) < size && rightChild(index).compareTo(leftChild(index)) > 0) {
+                biggerChildIndex = getRightChildIndex(index);
+            }
+            if (data[index].compareTo(data[biggerChildIndex]) > 0) {
+                break;
+            } else {
+                swap(index, biggerChildIndex);
+            }
+            index = biggerChildIndex;
+        }
+    }
+
+    private void siftDownHeapify(int index) { //假设最后一个元素已经放在头部了
         while (getLeftChildIndex(index) < size) {
             int biggerChildIndex = getLeftChildIndex(index);
             if (getRightChildIndex(index) < size && rightChild(index).compareTo(leftChild(index)) > 0) {
