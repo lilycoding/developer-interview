@@ -65,4 +65,16 @@ public interface IArrayList {
      * @return
      */
     void removeElement(int element);
+
+    /**
+     *
+     *打印数据和结果
+     */
+    void print();
+
+    /**
+     * 改变capacity的大小
+     * @param capacity
+     */
+    void resize(int capacity);
 }
