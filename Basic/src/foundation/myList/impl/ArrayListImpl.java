@@ -172,6 +172,10 @@ public class ArrayListImpl implements IArrayList {
         System.out.println();
     }
 
+    /**
+     * time: O(n）
+     * @param capacity
+     */
     @Override
     public void resize(int capacity) {
         int[] temp = new int[capacity];
